@@ -1,6 +1,5 @@
 import Document, { Head, Html, Main, NextScript } from "next/document";
 import React from "react";
-import { fontFiles } from "../styles/typography.css";
 
 export default class MyDocument extends Document {
   static async getInitialProps(ctx: any) {
@@ -9,22 +8,19 @@ export default class MyDocument extends Document {
   }
 
   render() {
-    console.log("fontFiles", fontFiles);
-
     return (
       <Html lang="en">
         <Head>
-          {fontFiles.map((file) => {
-            return (
-              <link
-                as="font"
-                crossOrigin="anonymous"
-                href={file}
-                key={file}
-                rel="preload"
-              />
-            );
-          })}
+          <link rel="preconnect" href="https://fonts.googleapis.com" />
+          <link
+            rel="preconnect"
+            href="https://fonts.gstatic.com"
+            crossOrigin={"true"}
+          />
+          <link
+            href="https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@300;700&family=Open+Sans:wght@400;800&display=swap"
+            rel="stylesheet"
+          ></link>
         </Head>
         <body>
           <Main />

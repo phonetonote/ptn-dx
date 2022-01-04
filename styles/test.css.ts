@@ -14,6 +14,6 @@ export const { small, p, h1, h2, h3, h4, hero } = fontStyles;
 export const boldText = style([
   fontStyles["p"],
   {
-    fontVariationSettings: `"wght" ${fonts["open-sans"].weights.bold}`,
+    fontWeight: fonts["open-sans"].weights.bold,
   },
 ]);

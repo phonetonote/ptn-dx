@@ -1,12 +1,4 @@
-import { globalFontFace, globalStyle } from "@vanilla-extract/css";
-import { fonts } from "./typography.css";
-
-globalFontFace(`"${fonts["open-sans"].name}"`, {
-  fontDisplay: `optional`,
-  fontStyle: `normal`,
-  fontWeight: fonts["open-sans"].weights.normal,
-  src: `url("${fonts["open-sans"].file}") format("${fonts["open-sans"].format}")`,
-});
+import { globalStyle } from "@vanilla-extract/css";
 
 globalStyle("*, *::before, *::after", {
   boxSizing: "border-box",
@@ -14,12 +6,8 @@ globalStyle("*, *::before, *::after", {
   padding: 0,
 });
 
-globalStyle("p, strong", {
+globalStyle("p, strong, h1, h2, h3, h4, .hero", {
   overflowWrap: `break-word`,
-  fontWeight: 400,
 });
 
-globalStyle("h1, h2, h3, h4, .hero", {
-  overflowWrap: `break-word`,
-  fontWeight: 700,
-});
+// TODO set base font to open sans 16px

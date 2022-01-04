@@ -1,7 +1,3 @@
-import { FontMetrics } from "@capsizecss/core";
-import openSansFontMetrics from "@capsizecss/metrics/openSans";
-import openSansCondensedFontMetrics from "@capsizecss/metrics/openSansCondensedLight";
-import { createTextStyle } from "@capsizecss/vanilla-extract";
 import { style } from "@vanilla-extract/css";
 
 export type FontWeight = "normal" | "bold";
@@ -9,10 +5,7 @@ type FontId = "open-sans" | "open-sans-condensed";
 
 type FontMeta = {
   fallback: string;
-  format: string;
-  metrics: FontMetrics;
   name: string;
-  file: string;
   weights: {
     [weight in FontWeight]?: number;
   };
@@ -26,20 +19,14 @@ export const fonts: Fonts = {
   ["open-sans"]: {
     name: `Open Sans`,
     fallback: `sans-serif`,
-    file: `${FONT_DIR}/OpenSans-VariableFont_wdth,wght.ttf`,
-    format: `truetype-variations`,
-    metrics: openSansFontMetrics,
     weights: {
       normal: 400,
-      bold: 700,
+      bold: 800,
     },
   },
   ["open-sans-condensed"]: {
     name: `Open Sans Condensed`,
     fallback: `sans-serif`,
-    file: `${FONT_DIR}/OpenSansCondensed-Bold.ttf`,
-    format: `truetype-variations`,
-    metrics: openSansCondensedFontMetrics,
     weights: {
       bold: 700,
     },
@@ -62,61 +49,59 @@ const typeScale: Record<TypeScaleKey, number> = {
   hero: 40,
 };
 
-type FontCssProps = {
-  fontId: FontId;
-  leading: number;
-  size: number;
+// TODO vertical rhythm using leading
+
+const normalStyle = {
+  fontFamily: fonts["open-sans"].name,
+  fontWeight: 400,
 };
 
-function calcFontCss({ fontId, leading, size }: FontCssProps) {
-  return style([
-    createTextStyle({
-      fontMetrics: fonts[fontId].metrics,
-      fontSize: size,
-      leading,
-    }),
-    {
-      fontFamily: `"${fonts[fontId].name}", ${fonts[fontId].fallback}`,
-    },
-  ]);
-}
+const headerStyle = {
+  fontFamily: fonts["open-sans-condensed"].name,
+  fontWeight: 700,
+};
 
 export const fontStyles: Record<TypeScaleKey, string> = {
-  ["small"]: calcFontCss({
-    fontId: "open-sans",
-    leading: 16.5,
-    size: typeScale.small,
-  }),
-  ["p"]: calcFontCss({
-    fontId: "open-sans",
-    leading: 16.5,
-    size: typeScale.p,
-  }),
-  ["h4"]: calcFontCss({
-    fontId: "open-sans-condensed",
-    leading: 21,
-    size: typeScale.h4,
-  }),
-  ["h3"]: calcFontCss({
-    fontId: "open-sans-condensed",
-    leading: 21,
-    size: typeScale.h3,
-  }),
-  ["h2"]: calcFontCss({
-    fontId: "open-sans-condensed",
-    leading: 21,
-    size: typeScale.h2,
-  }),
-  ["h1"]: calcFontCss({
-    fontId: "open-sans-condensed",
-    leading: 21,
-    size: typeScale.h1,
-  }),
-  ["hero"]: calcFontCss({
-    fontId: "open-sans-condensed",
-    leading: 21,
-    size: typeScale.hero,
-  }),
+  ["small"]: style([
+    {
+      ...normalStyle,
+      fontSize: `${typeScale.small}px`,
+    },
+  ]),
+  ["p"]: style([
+    {
+      ...normalStyle,
+      fontSize: `${typeScale.p}px`,
+    },
+  ]),
+  ["h4"]: style([
+    {
+      ...headerStyle,
+      fontSize: `${typeScale.h4}px`,
+    },
+  ]),
+  ["h3"]: style([
+    {
+      ...headerStyle,
+      fontSize: `${typeScale.h3}px`,
+    },
+  ]),
+  ["h2"]: style([
+    {
+      ...headerStyle,
+      fontSize: `${typeScale.h2}px`,
+    },
+  ]),
+  ["h1"]: style([
+    {
+      ...headerStyle,
+      fontSize: `${typeScale.h1}px`,
+    },
+  ]),
+  ["hero"]: style([
+    {
+      ...headerStyle,
+      fontSize: `${typeScale.hero}px`,
+    },
+  ]),
 };
-
-export const fontFiles = Object.values(fonts).flatMap((font) => font.file);
