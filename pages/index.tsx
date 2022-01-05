@@ -1,15 +1,17 @@
 import type { NextPage } from "next";
-import * as styles from "../styles/test.css";
+import * as types from "../styles/typography.css";
+import * as layout from "../styles/test.css";
 
 const Home: NextPage = () => {
   return (
-    <div className={styles.layout}>
-      <h1 className={styles.hero}>my big hero</h1>
-      <h1 className={styles.h1}>my h1</h1>
-      <h2 className={styles.h2}>my h2</h2>
-      <p className={styles.p}>my paragraph</p>
-      <label className={styles.small}>my label</label>
-      <p className={styles.boldText}>my bold text</p>
+    <div className={layout.layout}>
+      <h1 className={types.hero}>my big hero</h1>
+      <h1>my h1</h1>
+      <h2>my h2</h2>
+      <p>my paragraph</p>
+
+      <small>my label</small>
+      <strong>my bold text</strong>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import { style } from "@vanilla-extract/css";
+import { globalStyle, style } from "@vanilla-extract/css";
 
 export type FontWeight = "normal" | "bold";
 type FontId = "open-sans" | "open-sans-condensed";
@@ -12,8 +12,6 @@ type FontMeta = {
 };
 
 type Fonts = Record<FontId, FontMeta>;
-
-const FONT_DIR = "/fonts";
 
 export const fonts: Fonts = {
   ["open-sans"]: {
@@ -61,47 +59,14 @@ const headerStyle = {
   fontWeight: 700,
 };
 
-export const fontStyles: Record<TypeScaleKey, string> = {
-  ["small"]: style([
-    {
-      ...normalStyle,
-      fontSize: `${typeScale.small}px`,
-    },
-  ]),
-  ["p"]: style([
-    {
-      ...normalStyle,
-      fontSize: `${typeScale.p}px`,
-    },
-  ]),
-  ["h4"]: style([
-    {
-      ...headerStyle,
-      fontSize: `${typeScale.h4}px`,
-    },
-  ]),
-  ["h3"]: style([
-    {
-      ...headerStyle,
-      fontSize: `${typeScale.h3}px`,
-    },
-  ]),
-  ["h2"]: style([
-    {
-      ...headerStyle,
-      fontSize: `${typeScale.h2}px`,
-    },
-  ]),
-  ["h1"]: style([
-    {
-      ...headerStyle,
-      fontSize: `${typeScale.h1}px`,
-    },
-  ]),
-  ["hero"]: style([
-    {
-      ...headerStyle,
-      fontSize: `${typeScale.hero}px`,
-    },
-  ]),
-};
+globalStyle("html", { ...normalStyle, fontSize: `${typeScale.p}px` });
+globalStyle("h1", { ...headerStyle, fontSize: `${typeScale.h1}px` });
+globalStyle("h2", { ...headerStyle, fontSize: `${typeScale.h2}px` });
+globalStyle("h3", { ...headerStyle, fontSize: `${typeScale.h3}px` });
+globalStyle("h4", { ...headerStyle, fontSize: `${typeScale.h4}px` });
+globalStyle("small", { ...normalStyle, fontSize: `${typeScale.small}px` });
+globalStyle("strong", { fontWeight: fonts["open-sans"].weights.bold });
+
+export const hero = style([
+  { ...headerStyle, fontSize: `${typeScale.hero}px` },
+]);
