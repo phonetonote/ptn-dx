@@ -1,13 +1,14 @@
 import type { NextPage } from "next";
 import * as types from "../styles/typography.css";
 import * as layout from "../styles/test.css";
+import Heading from "../components/typography/Heading";
 
 const Home: NextPage = () => {
   return (
     <div className={layout.layout}>
-      <h1 className={types.hero}>my big hero</h1>
-      <h1>my h1</h1>
-      <h2>my h2</h2>
+      <Heading sizeKey="hero">my big hero</Heading>
+      <Heading sizeKey="h1">my h1</Heading>
+      <Heading sizeKey="h2">my h2</Heading>
       <p>my paragraph</p>
 
       <small>my label</small>

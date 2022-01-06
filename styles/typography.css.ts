@@ -1,4 +1,9 @@
 import { globalStyle, style } from "@vanilla-extract/css";
+import { FontMetrics } from "@capsizecss/core";
+import openSansMetrics from "@capsizecss/metrics/openSans";
+import openSansCondensedMetrics from "@capsizecss/metrics/openSansCondensedLight";
+import { createTextStyle, precomputeValues } from "@capsizecss/vanilla-extract";
+import { createStyleObject } from "@capsizecss/core";
 
 export type FontWeight = "normal" | "bold";
 type FontId = "open-sans" | "open-sans-condensed";
@@ -9,6 +14,7 @@ type FontMeta = {
   weights: {
     [weight in FontWeight]?: number;
   };
+  metrics: FontMetrics;
 };
 
 type Fonts = Record<FontId, FontMeta>;
@@ -21,6 +27,7 @@ export const fonts: Fonts = {
       normal: 400,
       bold: 800,
     },
+    metrics: openSansMetrics,
   },
   ["open-sans-condensed"]: {
     name: `Open Sans Condensed`,
@@ -28,6 +35,7 @@ export const fonts: Fonts = {
     weights: {
       bold: 700,
     },
+    metrics: openSansCondensedMetrics,
   },
 };
 
@@ -35,9 +43,11 @@ export const fonts: Fonts = {
 // Minor Third
 // base: 16
 
-type TypeScaleKey = "small" | "p" | "hero" | "h1" | "h2" | "h3" | "h4";
+export type HeaderScaleKey = "hero" | "h1" | "h2" | "h3" | "h4";
+export type TextScaleKey = "small" | "p";
+export type TypeScaleKey = TextScaleKey | HeaderScaleKey;
 
-const typeScale: Record<TypeScaleKey, number> = {
+export const typeScale: Record<TypeScaleKey, number> = {
   small: 13,
   p: 16,
   h4: 19,
@@ -49,24 +59,36 @@ const typeScale: Record<TypeScaleKey, number> = {
 
 // TODO vertical rhythm using leading
 
-const normalStyle = {
-  fontFamily: fonts["open-sans"].name,
+export const normalStyle = {
+  fontFamily: `"${fonts["open-sans"].name}", ${fonts["open-sans"].fallback}`,
   fontWeight: 400,
 };
 
-const headerStyle = {
-  fontFamily: fonts["open-sans-condensed"].name,
+export const headerStyle = {
+  fontFamily: `"${fonts["open-sans-condensed"].name}", ${fonts["open-sans-condensed"].fallback}`,
   fontWeight: 700,
 };
 
-globalStyle("html", { ...normalStyle, fontSize: `${typeScale.p}px` });
-globalStyle("h1", { ...headerStyle, fontSize: `${typeScale.h1}px` });
-globalStyle("h2", { ...headerStyle, fontSize: `${typeScale.h2}px` });
-globalStyle("h3", { ...headerStyle, fontSize: `${typeScale.h3}px` });
-globalStyle("h4", { ...headerStyle, fontSize: `${typeScale.h4}px` });
-globalStyle("small", { ...normalStyle, fontSize: `${typeScale.small}px` });
-globalStyle("strong", { fontWeight: fonts["open-sans"].weights.bold });
+const calcCappedCss = (sizeKey: TypeScaleKey) => {
+  const fontSize = typeScale[sizeKey];
+  return createTextStyle({
+    fontSize,
+    leading: fontSize * 1.3,
+    fontMetrics: fonts["open-sans-condensed"].metrics,
+  });
+};
 
-export const hero = style([
-  { ...headerStyle, fontSize: `${typeScale.hero}px` },
-]);
+export const headerStyleClasses: Record<HeaderScaleKey, string> = {
+  ["hero"]: style([headerStyle, calcCappedCss("hero")]),
+  ["h1"]: style([headerStyle, calcCappedCss("h1")]),
+  ["h2"]: style([headerStyle, calcCappedCss("h2")]),
+  ["h3"]: style([headerStyle, calcCappedCss("h3")]),
+  ["h4"]: style([headerStyle, calcCappedCss("h4")]),
+};
+
+export const textStyleClasses: Record<TextScaleKey, string> = {
+  ["small"]: style([normalStyle, calcCappedCss("small")]),
+  ["p"]: style([normalStyle, calcCappedCss("p")]),
+};
+
+globalStyle("html", { ...normalStyle });
