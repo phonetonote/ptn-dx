@@ -6,14 +6,16 @@ import { createTextStyle, precomputeValues } from "@capsizecss/vanilla-extract";
 import { createStyleObject } from "@capsizecss/core";
 
 export type FontWeight = "normal" | "bold";
+
+export type HeaderWeight = { bold: number };
+export type TextWeight = { bold: number; normal: number };
+
 type FontId = "open-sans" | "open-sans-condensed";
 
 type FontMeta = {
   fallback: string;
   name: string;
-  weights: {
-    [weight in FontWeight]?: number;
-  };
+  weights: HeaderWeight | TextWeight;
   metrics: FontMetrics;
 };
 

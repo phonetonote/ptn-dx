@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
-import * as types from "../styles/typography.css";
 import * as layout from "../styles/test.css";
 import Heading from "../components/typography/Heading";
+import Text from "../components/typography/Text";
 
 const Home: NextPage = () => {
   return (
@@ -9,10 +9,10 @@ const Home: NextPage = () => {
       <Heading sizeKey="hero">my big hero</Heading>
       <Heading sizeKey="h1">my h1</Heading>
       <Heading sizeKey="h2">my h2</Heading>
-      <p>my paragraph</p>
+      <Text>my paragraph</Text>
 
-      <small>my label</small>
-      <strong>my bold text</strong>
+      <Text sizeKey="small">my label</Text>
+      <Text fontWeightKey="bold">my bold text</Text>
     </div>
   );
 };
