@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import * as layout from "../styles/test.css";
+import * as layout from "../styles/app.css";
 import Heading from "../components/typography/Heading";
 import Text from "../components/typography/Text";
 

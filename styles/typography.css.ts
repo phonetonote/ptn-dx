@@ -2,8 +2,7 @@ import { globalStyle, style } from "@vanilla-extract/css";
 import { FontMetrics } from "@capsizecss/core";
 import openSansMetrics from "@capsizecss/metrics/openSans";
 import openSansCondensedMetrics from "@capsizecss/metrics/openSansCondensedLight";
-import { createTextStyle, precomputeValues } from "@capsizecss/vanilla-extract";
-import { createStyleObject } from "@capsizecss/core";
+import { createTextStyle } from "@capsizecss/vanilla-extract";
 
 export type FontWeight = "normal" | "bold";
 
